@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { generateInvoice } from "../invoice";
 import {
@@ -5,7 +6,7 @@ import {
   getDocs,
   doc,
   updateDoc,
-  deleteDoc,
+  
   query,
   orderBy,
 } from "firebase/firestore";
@@ -49,12 +50,14 @@ function AdminOrders() {
       const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
       const snapshot = await getDocs(q);
 
-      const data = snapshot.docs.map((item) => ({
-        id: item.id,
-        ...item.data(),
-      }));
+     const data = snapshot.docs
+  .map((item) => ({
+    id: item.id,
+    ...item.data(),
+  }))
+  .filter((order: any) => !order.archived);
 
-      setOrders(data);
+setOrders(data);
     };
 
     loadOrders();
@@ -74,13 +77,16 @@ function AdminOrders() {
     }
   };
 
-  const deleteOrder = async (orderId: string) => {
-    if (!window.confirm("Delete this order?")) return;
+  const archiveOrder = async (orderId: string) => {
+  if (!window.confirm("Archive this order?")) return;
 
-    await deleteDoc(doc(db, "orders", orderId));
-    setOrders((prev) => prev.filter((order) => order.id !== orderId));
-    setSelectedOrder(null);
-  };
+  await updateDoc(doc(db, "orders", orderId), {
+    archived: true,
+  });
+
+  setOrders((prev) => prev.filter((order) => order.id !== orderId));
+  setSelectedOrder(null);
+};
 
   const filteredOrders = orders.filter((order) => {
     const keyword = searchTerm.toLowerCase();
@@ -232,7 +238,7 @@ function AdminOrders() {
                   alignItems: "center",
                 }}
               >
-                <button onClick={() => deleteOrder(order.id)}>Delete</button>
+                <button onClick={() => archiveOrder(order.id)}>Archive</button>
 
                 <button onClick={() => setSelectedOrder(order)}>
                   View Details

@@ -2,22 +2,25 @@ type NavbarProps = {
   user: any;
   search: string;
   cartCount: number;
+  wishlistCount?: number;
   onSearchChange: (value: string) => void;
   onLogin: () => void;
   onLogout: () => void;
-
   isCartOpen: boolean;
-onToggleCart: () => void;
+  onToggleCart: () => void;
+  onOpenWishlist?: () => void;
 };
 
 function Navbar({
   user,
   search,
   cartCount,
+  wishlistCount = 0,
   onSearchChange,
   onLogin,
   onLogout,
   onToggleCart,
+  onOpenWishlist,
 }: NavbarProps) {
   return (
     <nav className="navbar">
@@ -32,17 +35,22 @@ function Navbar({
       />
 
       <div className="nav-actions">
+        <button className="wishlist-badge" onClick={onOpenWishlist}>
+          💜 {wishlistCount}
+        </button>
+
         <button className="cart-badge" onClick={onToggleCart}>
-  🛒 {cartCount}
-</button>
+          🛒 {cartCount}
+        </button>
+
         {user ? (
-  <>
-    <span className="user-name">{user.displayName}</span>
-    <button onClick={onLogout}>Logout</button>
-  </>
-) : (
-  <button onClick={onLogin}>Sign in</button>
-  )}
+          <>
+            <span className="user-name">{user.displayName}</span>
+            <button onClick={onLogout}>Logout</button>
+          </>
+        ) : (
+          <button onClick={onLogin}>Sign in</button>
+        )}
       </div>
     </nav>
   );

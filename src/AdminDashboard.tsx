@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 function AdminDashboard() {
   return (
@@ -5,10 +6,10 @@ function AdminDashboard() {
       <h1>🛍️ U-May Chang Admin Dashboard</h1>
 
       <div className="admin-cards">
-        <div className="card">
-          <h2>📦 Products</h2>
-          <p>Manage Products</p>
-        </div>
+  <Link to="/admin/products" className="card">
+  <h2>📦 Products</h2>
+  <p>Manage Products</p>
+</Link>
 
        <Link to="/admin/orders" className="card">
   <h2>🧾 Orders</h2>

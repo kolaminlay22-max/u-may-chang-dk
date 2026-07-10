@@ -1,37 +1,27 @@
 import { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  doc,
-  updateDoc,
-  query,
-  orderBy,
-} from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
+import "./Orders.css";
+
+const trackingSteps = [
+  "Pending",
+  "Confirmed",
+  "Packing",
+  "Shipped",
+  "Delivered",
+];
 
 function Orders() {
   const [orders, setOrders] = useState<any[]>([]);
-const updateStatus = async (id: string, status: string) => {
-  const orderRef = doc(db, "orders", id);
 
-  await updateDoc(orderRef, {
-    status,
-  });
-
-  setOrders((prev: any[]) =>
-    prev.map((order: any) =>
-      order.id === id ? { ...order, status } : order
-    )
-  );
-};
   useEffect(() => {
     const loadOrders = async () => {
-    const q = query(
-  collection(db, "orders"),
-  orderBy("createdAt", "desc")
-);
+      const q = query(
+        collection(db, "orders"),
+        orderBy("createdAt", "desc")
+      );
 
-const snapshot = await getDocs(q);
+      const snapshot = await getDocs(q);
 
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -45,65 +35,154 @@ const snapshot = await getDocs(q);
   }, []);
 
   return (
-<div className="orders-container">
+    <div className="orders-container">
       <h2>My Orders</h2>
 
-      {orders.map((order) => (
-  <div key={order.id} className="order-card">
+      {orders.map((order) => {
+        const fixedStatus =
+          order.status === "Completed"
+            ? "Delivered"
+            : order.status || "Pending";
 
-    <h3>Total : {order.total} Baht</h3>
-<p>
- <strong>Order No:</strong> {order.orderNumber || order.id}
-</p>
+        const currentIndex = trackingSteps.indexOf(fixedStatus);
 
-<p>
-  <strong>Date:</strong>{" "}
-  {order.createdAt?.seconds
-    ? new Date(order.createdAt.seconds * 1000).toLocaleString()
-    : "No Date"}
-</p>
-<p>
-  <strong>Status:</strong> {order.status || "Pending"}
-</p>
+        return (
+          <div key={order.id} className="order-card">
 
-<button onClick={() => updateStatus(order.id, "Completed")}>
-  Mark Completed
-</button>
-    <p>{order.userName}</p>
+            {/* Brand */}
+            <div className="order-brand">
+              <div>
+                <h3>🛍️ U-May Chang</h3>
+                <p>Premium Fashion Store</p>
+              </div>
 
-    {order.items?.map((item: any, index: number) => (
-      <div key={index}>
-       <div
-  style={{
-    display: "flex",
-    alignItems: "center",
-    gap: "15px",
-    marginBottom: "10px",
-  }}
->
-  <img
-    src={new URL(`../assets/${item.image}`, import.meta.url).href}
-    alt={item.name}
-    style={{
-      width: "70px",
-      height: "70px",
-      objectFit: "cover",
-      borderRadius: "10px",
-    }}
-  />
+              <span
+                className={`status-badge ${
+                  fixedStatus === "Delivered"
+                    ? "completed"
+                    : "pending"
+                }`}
+              >
+                {order.status || "Pending"}
+              </span>
+            </div>
 
-  <div>
-    <h4>{item.name}</h4>
-    <p>💰 Price : {item.price}</p>
-    <p>📦 Quantity : {item.quantity}</p>
-  </div>
-</div>
-      </div>
-    ))}
+            {/* Order Info */}
+            <div className="order-info-grid">
 
-    <hr />
-  </div>
-))}
+              <div>
+                <span>Order ID</span>
+                <strong>
+                  #{order.orderNumber || order.id}
+                </strong>
+              </div>
+
+              <div>
+                <span>Customer</span>
+                <strong>👤 {order.userName}</strong>
+              </div>
+
+              <div>
+                <span>Date</span>
+                <strong>
+                  {order.createdAt?.seconds
+                    ? new Date(
+                        order.createdAt.seconds * 1000
+                      ).toLocaleDateString()
+                    : "No Date"}
+                </strong>
+              </div>
+
+              <div>
+                <span>Total</span>
+                <strong>{order.total} Baht</strong>
+              </div>
+
+            </div>
+
+            {/* Products */}
+            {order.items?.map((item: any, index: number) => {
+
+              const total =
+                Number(item.price) * Number(item.quantity);
+
+              return (
+
+                <div
+                  key={index}
+                  className="order-product"
+                >
+
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="order-product-image"
+                  />
+
+                  <div className="order-product-info">
+
+                    <h4>{item.name}</h4>
+
+                    <p>
+                      Price : {item.price} Baht
+                    </p>
+
+                    <p>
+                      Qty : {item.quantity}
+                    </p>
+
+                  </div>
+
+                  <div className="product-total">
+
+                    <span>Total</span>
+
+                    <strong>
+                      {total} Baht
+                    </strong>
+
+                  </div>
+
+                </div>
+
+              );
+
+            })}
+
+            {/* Tracking */}
+
+            <div className="order-tracking">
+
+              {trackingSteps.map((step, index) => (
+
+                <div
+                  key={step}
+                  className={`tracking-step ${
+                    index <= currentIndex
+                      ? "active"
+                      : ""
+                  }`}
+                >
+
+                  <span className="tracking-dot"></span>
+
+                  <p>{step}</p>
+
+                </div>
+
+              ))}
+
+            </div>
+
+            {/* Footer */}
+
+            <div className="order-footer">
+              Thank you for shopping with U-May Chang
+            </div>
+
+          </div>
+        );
+      })}
     </div>
   );
 }

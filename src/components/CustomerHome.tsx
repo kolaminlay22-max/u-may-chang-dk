@@ -1,8 +1,7 @@
-import emailjs from "@emailjs/browser";
 function CustomerHome() {
   return (
     <div>
-      <h1>Customer Home Page</h1>
+      <h1>Customer Home</h1>
     </div>
   );
 }
