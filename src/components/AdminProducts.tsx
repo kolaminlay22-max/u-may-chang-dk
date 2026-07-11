@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import {
@@ -13,6 +14,9 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import "./AdminProducts.css";
+import ProductForm from "./admin/products/ProductForm";
+import ProductToolbar from "./admin/products/ProductToolbar";
+import ProductCard from "./admin/products/ProductCard";
 
 type Product = {
   id: string;
@@ -389,17 +393,6 @@ function AdminProducts() {
     }
   };
 
-  const getStockClass = (stock: number) => {
-    if (stock === 0) return "out-of-stock";
-    if (stock <= 5) return "low-stock";
-    return "in-stock";
-  };
-
-  const getStockText = (stock: number) => {
-    if (stock === 0) return "Out of Stock";
-    if (stock <= 5) return `Low Stock: ${stock}`;
-    return `In Stock: ${stock}`;
-  };
 
   return (
     <main className="admin-products-page">
@@ -637,32 +630,12 @@ function AdminProducts() {
           </section>
         )}
 
-        <section className="product-toolbar">
-          <div className="product-search-wrapper">
-            <span>⌕</span>
-
-            <input
-              type="search"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Search product name or category..."
-            />
-          </div>
-
-          <select
-            className="product-category-filter"
-            value={selectedCategory}
-            onChange={(event) => setSelectedCategory(event.target.value)}
-          >
-            <option value="All">All Categories</option>
-
-            {categories.map((category) => (
-              <option value={category} key={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </section>
+<ProductToolbar
+  searchTerm={searchTerm}
+  selectedCategory={selectedCategory}
+  onSearchChange={setSearchTerm}
+  onCategoryChange={setSelectedCategory}
+/>
 
         <div className="products-result-header">
           <h2>All Products</h2>
@@ -686,77 +659,12 @@ function AdminProducts() {
         ) : (
           <section className="admin-product-grid">
             {filteredProducts.map((product) => (
-              <article className="admin-product-card" key={product.id}>
-                <div className="admin-product-image-wrapper">
-                  {product.image ? (
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="admin-product-image"
-                    />
-                  ) : (
-                    <div className="admin-product-no-image">No Image</div>
-                  )}
-
-                  <span className="admin-product-category">
-                    {product.category}
-                  </span>
-
-                  <span
-                    className={`admin-product-stock ${getStockClass(
-                      product.stock
-                    )}`}
-                  >
-                    {getStockText(product.stock)}
-                  </span>
-                </div>
-
-                <div className="admin-product-content">
-                  <h3>{product.name}</h3>
-
-                  <p className="admin-product-price">
-                    ฿{product.price.toLocaleString()}
-                  </p>
-
-                  {product.description && (
-                    <p className="admin-product-description">
-                      {product.description}
-                    </p>
-                  )}
-
-                  <div className="admin-product-sizes">
-                    <span>Sizes:</span>
-
-                    {product.sizes.length > 0 ? (
-                      <div>
-                        {product.sizes.map((size) => (
-                          <small key={size}>{size}</small>
-                        ))}
-                      </div>
-                    ) : (
-                      <em>Not required</em>
-                    )}
-                  </div>
-
-                  <div className="admin-product-actions">
-                    <button
-                      type="button"
-                      className="edit-product-button"
-                      onClick={() => openEditForm(product)}
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      type="button"
-                      className="delete-product-button"
-                      onClick={() => openDeleteModal(product)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </article>
+          <ProductCard
+  key={product.id}
+  product={product}
+  onEdit={openEditForm}
+  onDelete={openDeleteModal}
+/>
             ))}
           </section>
         )}
