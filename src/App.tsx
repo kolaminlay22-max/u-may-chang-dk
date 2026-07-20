@@ -1,3 +1,5 @@
+
+import LiveDashboard from "./components/liveSelling/LiveDashboard";
 import AdminProducts from "./components/AdminProducts";
 import ProductDetails from "./components/ProductDetails";
 import emailjs from "@emailjs/browser";
@@ -11,7 +13,7 @@ import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
-
+import CheckoutModal from "./components/CheckoutModal";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -21,7 +23,7 @@ import {
 
 import type { User } from "firebase/auth";
 import { auth, db } from "./firebase";
-
+import CustomerSubmitForm from "./components/customer/CustomerSubmitForm";
 import {
   doc,
   setDoc,
@@ -33,7 +35,16 @@ import {
   runTransaction,
   onSnapshot,
 } from "firebase/firestore";
-
+type CheckoutData = {
+  fullName: string;
+  phone: string;
+  address: string;
+  province: string;
+  district: string;
+  postalCode: string;
+  deliveryNote: string;
+  paymentMethod: string;
+};
 const categories = [
   "All",
   "T-Shirt",
@@ -85,7 +96,7 @@ function App() {
 
   const [cart, setCart] = useState<any[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
+const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [wishlistIds, setWishlistIds] = useState<string[]>([]);
 
   useEffect(() => {
@@ -254,8 +265,11 @@ function App() {
     setCart([]);
     setWishlistIds([]);
   };
-
-  const checkout = async () => {
+const openCheckout = () => {
+  setIsCartOpen(false);
+  setIsCheckoutOpen(true);
+};
+  const checkout = async (checkoutData: CheckoutData) => {
     if (!user) {
       alert("Please login first");
       return;
@@ -275,8 +289,15 @@ function App() {
 
     await addDoc(collection(db, "orders"), {
       userId: user.uid,
-      userName: user.displayName,
-      userEmail: user.email,
+userName: checkoutData.fullName,
+userEmail: user.email,
+phone: checkoutData.phone,
+address: checkoutData.address,
+province: checkoutData.province,
+district: checkoutData.district,
+postalCode: checkoutData.postalCode,
+deliveryNote: checkoutData.deliveryNote,
+paymentMethod: checkoutData.paymentMethod,
       items: cart,
       total,
       createdAt: serverTimestamp(),
@@ -292,7 +313,7 @@ function App() {
       {
         order_id: orderNumber,
         email: user.email,
-        name: user.displayName,
+        name: checkoutData.fullName,
         total,
       },
       "WyBv_VgU3aKpks0Xj"
@@ -305,9 +326,16 @@ function App() {
     alert("Order placed successfully");
     setCart([]);
     setIsCartOpen(false);
+    setIsCheckoutOpen(false);
   };
     return (
+      
     <Routes>
+      <Route
+  path="/live"
+  element={<LiveDashboard />}
+/>
+
       <Route
         path="/"
         element={
@@ -448,7 +476,7 @@ onOpenWishlist={() => alert("Wishlist page coming soon 💜")}
                   </div>
                 );
               })}
-            </section>
+            </section> 
 
             {isCartOpen && (
               <CartSidebar
@@ -457,9 +485,14 @@ onOpenWishlist={() => alert("Wishlist page coming soon 💜")}
                 onRemove={removeFromCart}
                 onIncrease={increaseQuantity}
                 onDecrease={decreaseQuantity}
-                onCheckout={checkout}
+                onCheckout={openCheckout}
               />
-            )}
+            )} 
+            <CheckoutModal
+  open={isCheckoutOpen}
+  onClose={() => setIsCheckoutOpen(false)}
+  onPlaceOrder={checkout}
+/>
           </div>
         }
       />
@@ -488,6 +521,10 @@ onOpenWishlist={() => alert("Wishlist page coming soon 💜")}
         path="/track-order"
         element={<TrackOrder />}
       />
+      <Route
+  path="/customer-submit"
+  element={<CustomerSubmitForm />}
+/>
     </Routes>
   );
 }

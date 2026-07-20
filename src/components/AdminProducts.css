@@ -985,11 +985,14 @@
     grid-template-columns: 1fr;
   }
 }
-.image-upload-box input[type="file"] {
-  display: none;
+.image-upload-box {
+  position: relative;
+  display: inline-block;
 }
 
+
 .image-upload-label {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1018,4 +1021,31 @@
 
 .uploaded-image-url {
   margin-top: 15px;
+}
+.product-image-file-input {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: 2px dashed #6d4aff;
+  border-radius: 12px;
+  background: #f7f5ff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.product-image-file-input::file-selector-button {
+  margin-right: 12px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: #6d4aff;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.image-upload-status {
+  margin-top: 10px;
+  color: #6d4aff;
+  font-weight: 600;
 }

@@ -1,53 +1,65 @@
-import type { Timestamp } from "firebase/firestore";
-
 export const PRODUCT_CATEGORIES = [
   "T-Shirt",
+  "Blouse",
+  "Shirt",
   "Dress",
+  "Skirt",
+  "Short Skirt",
+  "Long Skirt",
   "Pants",
+  "Jeans",
+  "Shorts",
+  "Leggings",
+  "Jumpsuit",
+  "Two-Piece Set",
+  "Jacket",
+  "Cardigan",
+  "Sweater",
+  "Coat",
   "Shoes",
+  "Sandals",
   "Bags",
   "Accessories",
+] as const;
+
+export const PRODUCT_SIZES = [
+  "Free Size",
+  "S",
+  "M",
+  "L",
+  "XL",
+  "2XL",
 ] as const;
 
 export type ProductCategory =
   (typeof PRODUCT_CATEGORIES)[number];
 
-export const PRODUCT_SIZES = [
-  "XS",
-  "S",
-  "M",
-  "L",
-  "XL",
-  "XXL",
-  "Free Size",
-] as const;
-
 export type ProductSize =
   (typeof PRODUCT_SIZES)[number];
-
-export interface Product {
+  export type Product = {
   id: string;
   name: string;
-  description: string;
   price: number;
-  image: string;
-  images: string[];
-  category: ProductCategory;
-  sizes: ProductSize[];
-  stock: number;
-  isActive: boolean;
-  createdAt?: Timestamp | null;
-  updatedAt?: Timestamp | null;
-}
-
-export interface ProductFormData {
+  regularPrice?: number;
+  livePrice?: number;
+  stock?: number;
+  category?: ProductCategory;
+  sizes?: ProductSize[];
+  image?: string;
+  image2?: string;
+  image3?: string;
+  image4?: string;
+};
+export type ProductFormData = {
   name: string;
-  description: string;
   price: number;
-  image: string;
-  images: string[];
-  category: ProductCategory;
-  sizes: ProductSize[];
-  stock: number;
-  isActive: boolean;
-}
+  regularPrice?: number;
+  livePrice?: number;
+  stock?: number;
+  category?: ProductCategory;
+  sizes?: ProductSize[];
+  image?: string;
+  image2?: string;
+  image3?: string;
+  image4?: string;
+};

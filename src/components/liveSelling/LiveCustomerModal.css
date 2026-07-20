@@ -1,0 +1,209 @@
+.live-customer-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(26, 20, 52, 0.58);
+  backdrop-filter: blur(8px);
+}
+
+.live-customer-modal {
+  width: min(720px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid rgba(109, 74, 255, 0.14);
+  border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(38, 26, 86, 0.28);
+  padding: 30px;
+}
+
+.live-customer-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #ece8f8;
+}
+
+.live-customer-modal-header h2 {
+  margin: 4px 0 0;
+  color: #2d254f;
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.live-customer-modal-close {
+  width: 44px;
+  height: 44px;
+  position: relative;
+z-index: 9999;
+pointer-events: auto;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: #f4f0ff;
+  color: #5d45cc;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.live-customer-modal-close:hover {
+  transform: rotate(8deg);
+  background: #e8e0ff;
+}
+
+.live-customer-form {
+  margin-top: 26px;
+}
+
+.live-customer-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.live-customer-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.live-customer-form-field-full {
+  grid-column: 1 / -1;
+}
+
+.live-customer-form-field label {
+  color: #2d254f;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.live-customer-form-field input,
+.live-customer-form-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #dcd5ef;
+  border-radius: 14px;
+  background: #fbfaff;
+  color: #2d254f;
+  font: inherit;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.live-customer-form-field input {
+  min-height: 52px;
+  padding: 0 16px;
+}
+
+.live-customer-form-field textarea {
+  min-height: 120px;
+  padding: 15px 16px;
+  resize: vertical;
+}
+
+.live-customer-form-field input::placeholder,
+.live-customer-form-field textarea::placeholder {
+  color: #aaa2bd;
+}
+
+.live-customer-form-field input:focus,
+.live-customer-form-field textarea:focus {
+  border-color: #6d4aff;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(109, 74, 255, 0.12);
+}
+
+.live-customer-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #ece8f8;
+}
+
+.live-customer-cancel-button,
+.live-customer-save-button {
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 13px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.live-customer-cancel-button {
+  border: 1px solid #dcd5ef;
+  background: #ffffff;
+  color: #51476b;
+}
+
+.live-customer-save-button {
+  border: none;
+  background: linear-gradient(135deg, #6d4aff, #7c3aed);
+  color: #ffffff;
+  box-shadow: 0 12px 24px rgba(109, 74, 255, 0.25);
+}
+
+.live-customer-cancel-button:hover,
+.live-customer-save-button:hover {
+  transform: translateY(-1px);
+}
+
+.live-customer-cancel-button:disabled,
+.live-customer-save-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+}
+
+@media (max-width: 700px) {
+  .live-customer-modal-overlay {
+    align-items: flex-end;
+    padding: 12px;
+  }
+
+  .live-customer-modal {
+    max-height: 92vh;
+    padding: 22px;
+    border-radius: 22px 22px 14px 14px;
+  }
+
+  .live-customer-modal-header h2 {
+    font-size: 24px;
+  }
+
+  .live-customer-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .live-customer-form-field-full {
+    grid-column: auto;
+  }
+
+  .live-customer-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .live-customer-cancel-button,
+  .live-customer-save-button {
+    width: 100%;
+  }
+}

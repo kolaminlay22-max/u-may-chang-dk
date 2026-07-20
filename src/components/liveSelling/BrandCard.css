@@ -1,0 +1,334 @@
+
+.brand-card {
+  width: 600px;
+  padding: 34px;
+  border-radius: 28px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 183, 3, 0.14),
+      transparent 30%
+    ),
+    linear-gradient(145deg, #ffffff, #f7f4ff);
+  color: #2d254f;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 28px 70px rgba(45, 37, 79, 0.24);
+}
+
+.brand-card-header {
+  text-align: center;
+}
+
+.brand-card-logo {
+  display: inline-flex;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6d4aff, #8b6cff);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.brand-card-header h1 {
+  margin: 18px 0 6px;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.brand-card-header p {
+  margin: 0;
+  color: #8b8499;
+  font-size: 0.95rem;
+}
+
+.brand-card-customer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid rgba(109, 74, 255, 0.14);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.brand-card-avatar {
+  display: grid;
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #6d4aff, #9c7cff);
+  color: #ffffff;
+  font-size: 1.55rem;
+  font-weight: 900;
+}
+
+.brand-card-customer h2 {
+  margin: 0 0 5px;
+  font-size: 1.18rem;
+}
+
+.brand-card-customer p {
+  margin: 0 0 7px;
+  color: #7b748b;
+}
+
+.brand-card-customer span {
+  display: inline-flex;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #f4f0ff;
+  color: #6d4aff;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.brand-card-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.brand-card-status span {
+  color: #777184;
+  font-weight: 700;
+}
+
+.brand-card-status strong {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #e8f8ee;
+  color: #168a45;
+  font-size: 0.82rem;
+  text-transform: capitalize;
+}
+
+.brand-card-products {
+  margin-top: 24px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+.brand-card-table-header,
+.brand-card-product-row {
+  display: grid;
+  grid-template-columns: 2fr 0.6fr 1fr 1fr;
+  align-items: center;
+  gap: 12px;
+}
+.brand-card-product-image {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #e5ddff;
+  background: #f7f5ff;
+}
+.brand-card-table-header {
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #6d4aff, #8b6cff);
+  color: #ffffff;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.brand-card-product-row {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 50px 80px 90px;
+  align-items: center;
+  gap: 12px;
+
+  padding: 15px 16px;
+  border-bottom: 1px solid #f0edf7;
+  font-size: 0.9rem;
+}
+.brand-card-product-image {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #e5ddff;
+  background: #f7f5ff;
+}
+.brand-card-product-row:last-child {
+  border-bottom: none;
+}
+
+.brand-card-product-row strong {
+  display: block;
+}
+
+.brand-card-product-row small {
+  display: block;
+  margin-top: 4px;
+  color: #8b8499;
+}
+
+.brand-card-table-header span:not(:first-child),
+.brand-card-product-row > span {
+  text-align: center;
+}
+
+.brand-card-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #2d254f, #493d7e);
+  color: #ffffff;
+}
+
+.brand-card-total span {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.brand-card-total strong {
+  font-size: 1.6rem;
+}
+
+.brand-card-footer {
+  margin-top: 26px;
+  text-align: center;
+}
+
+.brand-card-footer h3 {
+  margin: 0;
+  color: #6d4aff;
+  font-size: 1.25rem;
+}
+
+.brand-card-footer p {
+  margin: 7px 0 16px;
+  color: #7b748b;
+}
+
+.brand-card-footer div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 14px;
+  color: #5f586f;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+/* Receipt Number + Date */
+
+.brand-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 13px 16px;
+  border: 1px solid rgba(109, 74, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #6f6980;
+  font-size: 0.82rem;
+}
+
+.brand-card-meta div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.brand-card-meta strong {
+  color: #2d254f;
+  font-weight: 800;
+}
+
+@media (max-width: 520px) {
+  .brand-card-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* You Saved Box */
+
+.brand-card-saved {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding: 15px 18px;
+  border: 1px solid rgba(255, 183, 3, 0.28);
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fff8dc, #fffdf4);
+  color: #8a5b00;
+}
+
+.brand-card-saved span {
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.brand-card-saved strong {
+  color: #b26b00;
+  font-size: 1.18rem;
+  font-weight: 900;
+}
+.brand-card-customer h2 {
+  margin: 0;
+  color: #2d254f;
+  opacity: 1;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.3;
+  text-shadow: none;
+}
+
+.brand-card-customer p {
+  color: #6b647d;
+  opacity: 1;
+}
+
+.brand-card-customer span {
+  opacity: 1;
+}
+.brand-card .brand-card-customer h2 {
+  color: #2d254f !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  font-weight: 900 !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+.brand-card-customer-name {
+  display: block !important;
+  position: relative !important;
+  z-index: 10 !important;
+  margin: 0 0 5px !important;
+
+  color: #2d254f !important;
+  -webkit-text-fill-color: #2d254f !important;
+
+  font-family: Arial, sans-serif !important;
+  font-size: 1.35rem !important;
+  font-weight: 900 !important;
+  line-height: 1.3 !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  background: transparent !important;
+  background-image: none !important;
+
+  text-shadow: none !important;
+  filter: none !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}

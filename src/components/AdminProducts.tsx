@@ -41,11 +41,19 @@ type ProductForm = {
 };
 
 const categories = [
-  "T-Shirt",
   "Dress",
+  "T-Shirt",
+  "Long Sleeve",
+  "Short Sleeve",
+  "Blouse",
   "Pants",
+  "Jeans",
+  "Shorts",
+  "Skirt",
+  "Jacket",
+  "Hoodie",
+  "Bag",
   "Shoes",
-  "Bags",
   "Accessories",
 ];
 
@@ -526,25 +534,22 @@ function AdminProducts() {
   <label htmlFor="product-image-upload">Product Image *</label>
 
   <div className="image-upload-box">
-    <input
-      id="product-image-upload"
-      type="file"
-      accept="image/*"
-      onChange={handleImageUpload}
-      disabled={uploadingImage}
-    />
+  <input
+    id="product-image-upload"
+    type="file"
+    accept="image/*"
+    onChange={handleImageUpload}
+    disabled={uploadingImage}
+    className="product-image-file-input"
+  />
 
-    <label
-      htmlFor="product-image-upload"
-      className={`image-upload-label ${
-        uploadingImage ? "uploading" : ""
-      }`}
-    >
-      {uploadingImage
-        ? "Uploading image..."
-        : "📷 Choose Product Image"}
-    </label>
-  </div>
+  {uploadingImage && (
+    <p className="image-upload-status">
+      Uploading image...
+    </p>
+  )}
+</div>
+    
 
   {form.image && (
     <input
